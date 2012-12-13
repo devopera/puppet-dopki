@@ -1,0 +1,50 @@
+#!/bin/bash
+
+# Find environment (auth and pid) for ssh-agent
+SSH_ENV=/home/<%= user %>/.ssh/environment
+SSH_AUTOLOAD_TMP=/home/<%= user %>/.bash_keyautoload.tmp
+
+#
+# start_agent
+#   always create a new agent, then load ssh keys using ssh-add/expect
+#
+function start_agent {
+     # output progress message
+     echo "Initialising new SSH agent..."
+
+     # run a new agent and store details in environment
+     /usr/bin/ssh-agent | sed 's/^echo/#echo/' > ${SSH_ENV}
+     chmod 600 ${SSH_ENV}
+     
+     # execute the environment file to setup $SSH_AGENT_PID and _AUTH_SOCK
+     source ${SSH_ENV} > /dev/null
+     
+     # if there's a key_autoload.tmp file, run it
+     if [ -f "${SSH_AUTOLOAD_TMP}" ]; then
+         # add key non-interactively
+         /usr/bin/expect ${SSH_AUTOLOAD_TMP} > /dev/null
+     else
+         # add key interactively
+         /usr/bin/ssh-add;
+     fi
+}
+
+
+# if the environment file exists
+if [ -f "${SSH_ENV}" ]; then
+
+     # run the environment script to track down the incumbent agent 
+     source ${SSH_ENV} > /dev/null
+     
+     # find the ssh-agent process where pid = SSH_AGENT_PID
+     ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
+     
+         # if you can't find it, restart the agent
+         start_agent;
+         
+     }
+else
+     # if the environment file doesn't exist, run it from scratch
+     start_agent;
+fi
+

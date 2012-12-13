@@ -1,0 +1,8 @@
+#!/usr/bin/expect
+# Add key to ssh-agent using passphrase
+
+spawn ssh-add
+expect "Enter passphrase for /home/<%= user %>/.ssh/id_dsa:"
+send "<%= key_passphrase %>\n"
+expect eof
+exit
