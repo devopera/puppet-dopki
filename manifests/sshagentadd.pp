@@ -93,10 +93,4 @@ class dopki::sshagentadd(
     require => Exec['bash-add-check'],
   }
 
-  # delete the autoload file
-  #file { 'bash-agent-key-delete' :
-  #  path => "/home/${user}/.bash_keyautoload.tmp", 
-  #  ensure => absent,
-  #}
-
 }
