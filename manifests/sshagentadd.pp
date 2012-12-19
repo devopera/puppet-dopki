@@ -26,7 +26,7 @@ class dopki::sshagentadd(
     content => $key,
     mode => 0600,
     owner => $user,
-    require => [Package['openssh'], Package['expect']],
+    require => [Package['openssh-client'], Package['expect']],
   }
 
   file { 'bash-agent':
