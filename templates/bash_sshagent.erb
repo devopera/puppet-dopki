@@ -25,7 +25,7 @@ function start_agent {
          /usr/bin/expect ${SSH_AUTOLOAD_TMP} > /dev/null
      else
          # add key interactively
-         /usr/bin/ssh-add;
+         /usr/bin/ssh-add /home/<%= user %>/.ssh/<%= key_name %>;
      fi
 }
 

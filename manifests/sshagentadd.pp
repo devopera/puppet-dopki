@@ -5,9 +5,8 @@ class dopki::sshagentadd(
   # setup defaults
 
   $user,
-  $key, 
-  $key_passphrase = 'admLn**',
-  $key_type = 'rsa'
+  $key_passphrase = '',
+  $key_name = 'id_rsa'
 
   # end of class arguments
   # ----------------------
@@ -21,18 +20,10 @@ class dopki::sshagentadd(
     require => $require,
   }
 
-  file { 'ssh-id_xsa':
-    path => "/home/${user}/.ssh/id_${key_type}",
-    content => $key,
-    mode => 0600,
-    owner => $user,
-    require => [Package['openssh-client'], Package['expect']],
-  }
-
   file { 'bash-agent':
     path => "/home/${user}/.bash_sshagent",
     content => template('dopki/bash_sshagent.erb'),
-    require => [Package['openssh-server'], File['ssh-id_xsa']],
+    require => [Package['openssh-server'], Package['expect']],
     mode => 0700,
     owner => $user,
     group => $user,
@@ -84,7 +75,7 @@ class dopki::sshagentadd(
     cwd => "/home/${user}/",
     user => $user,
     provider => 'shell',
-    command => "bash -c \"source /home/${user}/.ssh/environment; ssh-add -L | grep '/home/${user}/.ssh/id_${key_type}'\"",
+    command => "bash -c \"source /home/${user}/.ssh/environment; ssh-add -L | grep '/home/${user}/.ssh/${key_name}'\"",
     require => Exec['bash-add-agent-autoload'],
   }
   
