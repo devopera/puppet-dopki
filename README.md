@@ -3,6 +3,13 @@ dopki
 
 Public-key infrastructure for devopera puppet config
 
+Changelog
+---------
+
+2013-02-25
+
+  * Modified to write notifier to parameterized ${notifier_dir}
+
 Copyright and License
 ---------------------
 

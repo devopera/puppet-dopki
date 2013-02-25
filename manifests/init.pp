@@ -14,6 +14,8 @@ class dopki (
   $key_private_type = 'dsa',
   $key_private_name = "id_${key_private_type}",
 
+  $notifier_dir = '/etc/puppet/tmp',
+
   # end of class arguments
   # ----------------------
   # begin class
@@ -71,7 +73,7 @@ class dopki (
     }
     # common File[] dependency for consistency
     file { 'ssh-id_xsa': 
-      path => '/tmp/puppet-dopki-create-key',
+      path => "${notifier_dir}/puppet-dopki-create-key",
       content => '',
       owner => $user,
       require => Exec['ssh-create-key-id_xsa'],
