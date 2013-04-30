@@ -79,9 +79,4 @@ class dopki::sshagentadd(
     require => Exec['bash-add-agent-autoload'],
   }
   
-  notify { 'remember-to-source' :
-    message => 'Remember to run "source .bashrc" to mimic normal login',
-    require => Exec['bash-add-check'],
-  }
-
 }

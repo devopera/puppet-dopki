@@ -85,6 +85,7 @@ class dopki (
       content => $key_private,
       mode => 0600,
       owner => $user,
+      group => $user,
       require => [User[$user], Package['openssh-client']],
     }
   }
