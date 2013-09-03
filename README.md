@@ -6,6 +6,10 @@ Public-key infrastructure for devopera puppet config
 Changelog
 ---------
 
+2013-09-03
+
+  * Introduced defined type dopki::addkey for adding multiple private and public keys
+
 2013-04-24
 
   * Private key file in /home/user/.ssh belongs to user (u+g)
