@@ -41,19 +41,19 @@ define dopki::addkey (
 
   # store public key
   if ($key_public != '') {
-    # allow other machines to ssh to this one using standard key
-    ssh_authorized_key { $user:
+    # allow other machines to ssh to this one using key
+    ssh_authorized_key { "dopki-addkey-${user}-${title}":
       ensure => present,
       key => $key_public,
-      name => $user_email,
+      name => "key ${title} for ${user_email}",
       user => $user,
       type => "ssh-${key_authorized_type}",
     }
     # also store in /home/<user>/.ssh/<private_key_name>.pub for continuity
-    ssh_authorized_key { "extra-id_xsa-${user}-${title}":
+    ssh_authorized_key { "dopki-addkey-extra-id_Xsa-${user}-${title}":
       ensure => present,
       key => $key_public,
-      name => "duplicate of ${user}'s key (${user_email}) that is stored in .ssh/authorized_keys",
+      name => "duplicate of ${user}'s ${title} key (${user_email}) that is stored in .ssh/authorized_keys",
       user => $user,
       type => "ssh-${key_authorized_type}",
       target => "/home/${user}/.ssh/${key_private_name_real}.pub",
@@ -63,7 +63,7 @@ define dopki::addkey (
   # store private key, if one passed
   if ($key_private != '') {
     # create a key file from passed var
-    file { "ssh-id_xsa-${title}":
+    file { "ssh-id_Xsa-${title}":
       path => "/home/${user}/.ssh/${key_private_name_real}",
       content => $key_private,
       mode => 0600,

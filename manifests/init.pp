@@ -15,7 +15,7 @@ class dopki (
   $key_private_name = undef,
 
   $notifier_dir = '/etc/puppet/tmp',
-
+  
   # end of class arguments
   # ----------------------
   # begin class
