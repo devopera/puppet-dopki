@@ -74,7 +74,7 @@ class dopki::sshagentadd(
     cwd => "/home/${user}/",
     user => $user,
     provider => 'shell',
-    command => "bash -c \"source /home/${user}/.ssh/environment; ssh-add -L | grep '/home/${user}/.ssh/${key_name}'\"",
+    command => "bash -c \"source /home/${user}/.ssh/environment; ssh-add -L | grep '.ssh/${key_name}'\"",
     require => Exec['bash-add-agent-autoload'],
   }
   
