@@ -1,0 +1,14 @@
+{
+  "name": "devopera-dopki",
+  "version": "0.9.0",
+  "author": "(c) Alex Stanhope, Devopera.com",
+  "summary": "Public-key infrastructure installation and configuration module",
+  "license": "Apache License, Version 2.0",
+  "source": "https://github.com/devopera/puppet-dopki",
+  "issues_url": "https://github.com/devopera/puppet-dopki/issues",
+  "description": "Public-key infrastructure for Devopera puppet config.  \nThis module creates, stores and load public-private key pairs to allow access to remote servers, such as GitHub.",
+  "project_page": "http://devopera.com/module/dopki",
+  "dependencies": [
+    {"name":"devopera/docommon","version_requirement":"0.9.0"}
+  ]
+}
