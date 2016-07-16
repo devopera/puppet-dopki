@@ -6,6 +6,7 @@ define dopki::addkey (
 
   $user = 'web',
   $user_email = 'admin@example.com',
+  $user_ssh_access = true,
 
   # main user's public and private (with passphrase) keys
   $key_public = '',
@@ -41,14 +42,17 @@ define dopki::addkey (
 
   # store public key
   if ($key_public != '') {
-    # allow other machines to ssh to this one using key
-    ssh_authorized_key { "dopki-addkey-${user}-${title}":
-      ensure => present,
-      key => $key_public,
-      name => "key ${title} for ${user_email}",
-      user => $user,
-      type => "ssh-${key_authorized_type}",
+    if ($user_ssh_access == true) {
+      # allow other machines to ssh to this one using key
+      ssh_authorized_key { "dopki-addkey-${user}-${title}":
+        ensure => present,
+        key => $key_public,
+        name => "key ${title} for ${user_email}",
+        user => $user,
+        type => "ssh-${key_authorized_type}",
+      }
     }
+
     # also store in /home/<user>/.ssh/<private_key_name>.pub for continuity
     ssh_authorized_key { "dopki-addkey-extra-id_Xsa-${user}-${title}":
       ensure => present,

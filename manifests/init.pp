@@ -6,6 +6,7 @@ class dopki (
 
   $user = 'web',
   $user_email = 'admin@example.com',
+  $user_ssh_access = true,
 
   # main user's public and private (with passphrase) keys
   $key_public = '',
@@ -42,6 +43,7 @@ class dopki (
   dopki::addkey { 'dopki-add-firstkey' :
     user => $user,
     user_email => $user_email,
+    user_ssh_access => $user_ssh_access,
     key_public => $key_public,
     key_private => $key_private,
     key_private_passphrase => $key_private_passphrase,
