@@ -18,7 +18,7 @@ class dopki::sshagentcleanup(
     cwd => "/home/${user}/",
     user => $user,
     provider => 'shell',
-    command => "bash -c 'rm -rf /home/${user}/.bash_keyautoload.tmp'",
+    command => "bash -c '/home/${user}/.bash_sshagent_cleanup'",
   }
   
   # alternatively ensure the autoload file is deleted

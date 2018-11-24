@@ -30,13 +30,13 @@ class dopki::sshagentadd(
   }
 
   # add include to .bashrc if unset, so this user gets agent when logging in
-  $command_bash_include_sshagent = "\n# pull in ssh_agent config if present\nif [ -f /home/${user}/.bash_sshagent ]; then\n        source /home/${user}/.bash_sshagent\nfi\n" 
-  concat::fragment { 'sshagent-bashrc-add':
-    target  => "/home/${user}/.bashrc",
-    content => $command_bash_include_sshagent,
-    order   => '30',
-    require => [File['bash-agent']],
-  }
+  #$command_bash_include_sshagent = "\n# pull in ssh_agent config if present\nif [ -f /home/${user}/.bash_sshagent ]; then\n        source /home/${user}/.bash_sshagent\nfi\n" 
+  #concat::fragment { 'sshagent-bashrc-add':
+  #  target  => "/home/${user}/.bashrc",
+  #  content => $command_bash_include_sshagent,
+  #  order   => '30',
+  #  require => [File['bash-agent']],
+  #}
 
   # create a cleanup file
   file { 'bash-agent-cleanup':

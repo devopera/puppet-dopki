@@ -15,9 +15,6 @@ define dopki::addkey (
   $key_private_type = 'dsa',
   $key_private_name = undef,
 
-  # load key into agent
-  $load_locally = false,
-
   $notifier_dir = '/etc/puppet/tmp',
 
   # end of defined type arguments
@@ -76,8 +73,4 @@ define dopki::addkey (
     }
   }
 
-  # @todo This does not work yet as defined type doesn't exist
-  if ($load_locally) {
-    # allow this machine to ssh to others using ssh-agent-stored key
-  }
 }

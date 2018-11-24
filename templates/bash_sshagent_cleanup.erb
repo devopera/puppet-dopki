@@ -7,3 +7,7 @@ SSH_AUTOLOAD_TMP=/home/<%= user %>/.bash_keyautoload.tmp
 kill $(ps -ef | grep '[s]sh-agent' | awk '{print $2}')
 rm -f ${SSH_ENV}
 rm -f ${SSH_AUTOLOAD_TMP}
+
+# Unset environment variables
+unset SSH_ENV
+unset SSH_AUTOLOAD_TMP
