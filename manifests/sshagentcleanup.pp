@@ -19,6 +19,7 @@ class dopki::sshagentcleanup(
     user => $user,
     provider => 'shell',
     command => "bash -c '/home/${user}/.bash_sshagent_cleanup'",
+    onlyif => "test -f /home/${user}/.bash_sshagent_cleanup",
   }
   
   # alternatively ensure the autoload file is deleted

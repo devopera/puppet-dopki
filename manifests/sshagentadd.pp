@@ -15,8 +15,7 @@ class dopki::sshagentadd(
 ) {
 
   # install expect package and use for nested requisites
-  package { 'expect' :
-    ensure => installed,
+  anchor { 'dopki-sshagentadd-req' :
     require => $require,
   }
 
