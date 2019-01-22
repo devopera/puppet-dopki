@@ -15,7 +15,6 @@ class dopki (
   $key_private_type = 'dsa',
   $key_private_name = undef,
 
-  $set_up_local_agent = true,
   $notifier_dir = '/etc/puppet/tmp',
   
   # end of class arguments
@@ -57,7 +56,8 @@ class dopki (
     #}
   }
 
-  if ($set_up_local_agent) {
+  # only add an agent (e.g. .ssh/environment) if we have a private key
+  if ($key_private != '') {
     # allow this machine to ssh to others by loading keys into ssh-agent
     # crucial for git repos from github
     # SECURITY RISK: use with care
