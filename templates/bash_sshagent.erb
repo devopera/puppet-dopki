@@ -32,19 +32,10 @@ function start_agent {
 
 # if the environment file exists
 if [ -f "${SSH_ENV}" ]; then
-
-     # run the environment script to track down the incumbent agent 
-     source ${SSH_ENV} > /dev/null
-     
-     # find the ssh-agent process where pid = SSH_AGENT_PID
-     ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
-     
-         # if you can't find it, restart the agent
-         start_agent;
-         
-     }
-else
-     # if the environment file doesn't exist, run it from scratch
-     start_agent;
+     # kill the existing agent
+     kill $(ps -ef | grep '[s]sh-agent' | awk '{print $2}')
 fi
+
+# start agent afresh everytime
+start_agent;
 

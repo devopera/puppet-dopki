@@ -51,13 +51,13 @@ define dopki::addkey (
     }
 
     # also store in /home/<user>/.ssh/<private_key_name>.pub for continuity
-    ssh_authorized_key { "dopki-addkey-extra-id_Xsa-${user}-${title}":
+    file { "dopki-addkey-extra-id_Xsa-${user}-${title}":
+      path => "/home/${user}/.ssh/${key_private_name_real}.pub",
       ensure => present,
-      key => $key_public,
-      name => "duplicate of ${user}'s ${title} key (${user_email}) that is stored in .ssh/authorized_keys",
-      user => $user,
-      type => "ssh-${key_authorized_type}",
-      target => "/home/${user}/.ssh/${key_private_name_real}.pub",
+      content => "ssh-${key_authorized_type} ${key_public} duplicate of ${user}'s ${title} key (${user_email}) that is stored in .ssh/authorized_keys",
+      mode => '0600',
+      owner => $user,
+      group => $user,
     }
   }
 
@@ -67,7 +67,7 @@ define dopki::addkey (
     file { "ssh-id_Xsa-${title}":
       path => "/home/${user}/.ssh/${key_private_name_real}",
       content => $key_private,
-      mode => 0600,
+      mode => '0600',
       owner => $user,
       group => $user,
     }
